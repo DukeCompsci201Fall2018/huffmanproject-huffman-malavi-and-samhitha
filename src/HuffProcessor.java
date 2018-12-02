@@ -10,6 +10,7 @@
  * @author Owen Astrachan
  */
 //Samhitha Sunkara 
+//Malavi Ravindran
 public class HuffProcessor {
 
 	public static final int BITS_PER_WORD = 8;
