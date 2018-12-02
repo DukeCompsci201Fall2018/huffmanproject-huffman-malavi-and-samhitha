@@ -106,13 +106,13 @@ public class HuffProcessor {
 				
 			}
 			else {
-				if (bits == 0) current = current.left;
-				else current = current.right;
-				if (current is a leaf node) {
-					if (current.value==PSEUDO_EOF)
+				if (bits == 0) current = current.myLeft;
+				else current = current.myRight;
+				if (current.myLeft == null && current.myRight==null) {
+					if (current.myValue==PSEUDO_EOF)
 						break;
 					else {
-						write bits for current.value;
+						current.myValue = BITS_PER_WORD;
 						current = root; //start back after leaf
 					}
 				}
