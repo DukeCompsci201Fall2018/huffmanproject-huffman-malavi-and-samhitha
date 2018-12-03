@@ -61,7 +61,10 @@ public class HuffProcessor {
 	//	out.close();
 	}
 	private void readCompressedbitsForCompress(String[] codings, BitInputStream in, BitOutputStream out) {
-		// TODO Auto-generated method stub
+		//reset?
+		for (String coding: codings) {
+			
+		}
 		
 	}
 
