@@ -66,13 +66,39 @@ public class HuffProcessor {
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
-		// TODO Auto-generated method stub
+		while(root != null) {
+			if (root.myLeft != null && root.myRight != null) { //if internal node
+				out.writeBits(1,0);
+				writeHeader(root.myLeft, out);
+				writeHeader(root.myRight, out);
+			}
+			else {
+				out.writeBits(1,1);
+				int value = root.myValue;
+				out.writeBits(BITS_PER_WORD+1, value);
+			}
 		
+		}
 	}
 
+
 	private String[] makeCodingsFromTree(HuffNode root) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] encodings = new String[ALPH_SIZE + 1];
+		codingHelper(root,"", encodings);
+		return encodings;
+	}
+	private void codingHelper(HuffNode root, String path, String [] encodings) {
+		if (root == null) {
+			return;
+		}
+		if (root.myLeft == null && root.myRight ==null) {
+			encodings[root.myValue] = path;
+			return;
+		}
+		codingHelper(root.myLeft, path+"0", encodings);
+		codingHelper(root.myRight, path+"0", encodings);
+
+		
 	}
 
 	private HuffNode makeTreeFromCounts(int[] counts) {
