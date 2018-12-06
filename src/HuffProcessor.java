@@ -62,9 +62,16 @@ public class HuffProcessor {
 	}
 	private void readCompressedbitsForCompress(String[] codings, BitInputStream in, BitOutputStream out) {
 		//reset?
-		for (String coding: codings) {
-			
+		String code;
+		
+		for (String coding : codings) {
+			code = coding;
+			out.writeBits(code.length(), Integer.parseInt(code,2));
 		}
+		code = codings[PSEUDO_EOF];
+		out.writeBits(code.length(), Integer.parseInt(code,2));
+		out.close();
+		
 		
 	}
 
@@ -84,7 +91,7 @@ public class HuffProcessor {
 		}
 	}
 
-
+	//this makes the 010100101 telling you left or right thing
 	private String[] makeCodingsFromTree(HuffNode root) {
 		String[] encodings = new String[ALPH_SIZE + 1];
 		codingHelper(root,"", encodings);
@@ -99,7 +106,7 @@ public class HuffProcessor {
 			return;
 		}
 		codingHelper(root.myLeft, path+"0", encodings);
-		codingHelper(root.myRight, path+"0", encodings);
+		codingHelper(root.myRight, path+"1", encodings);
 
 		
 	}
@@ -109,6 +116,9 @@ public class HuffProcessor {
 		for (int i = 0; i<counts.length;i++) {
 			if (counts[i]>0) {
 				pq.add(new HuffNode (i, counts[i], null, null));
+			}
+			if (!pq.contains(PSEUDO_EOF)) {
+				pq.add(new HuffNode(0,PSEUDO_EOF,null,null));
 			}
 			
 		}
