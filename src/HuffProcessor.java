@@ -102,7 +102,7 @@ public class HuffProcessor {
 	}
 
 	//this makes the 010100101 telling you left or right thing
-	TreeMap<Integer,String> myMap = new TreeMap<>();
+	private TreeMap<Integer,String> myMap = new TreeMap<>();
 	private String[] makeCodingsFromTree(HuffNode root) {
 		
 		String[] encodings = new String[ALPH_SIZE + 1];
