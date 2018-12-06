@@ -65,17 +65,22 @@ public class HuffProcessor {
 		//reset?
 		String code;
 		
-		for (String coding : codings) {
+	//	use in to go through the entire text, look up each word in codings to see its coding, third step is the out.writebits
+		
+		while(true) {
+			int bits = in.readBits(BITS_PER_WORD);
 			
-			code = coding;
-			if (out == null) {
-				System.out.print(8/0);
+			code = codings[bits];
+		
+			out.writeBits(code.length(), Integer.parseInt(code,2));
+		
+			if (bits == -1) {
+				code = codings[PSEUDO_EOF];
+				out.writeBits(code.length(), Integer.parseInt(code,2));
+				break;
+			
 			}
-			out.writeBits(code.length(), Integer.parseInt(code,2));
-		}
-	
-			code = codings[PSEUDO_EOF];
-			out.writeBits(code.length(), Integer.parseInt(code,2));
+		}	
 		
 		out.close();
 		
