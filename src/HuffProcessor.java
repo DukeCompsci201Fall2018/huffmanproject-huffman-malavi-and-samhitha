@@ -1,4 +1,5 @@
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 /**
  * Although this class has a history of several years,
@@ -101,9 +102,16 @@ public class HuffProcessor {
 	}
 
 	//this makes the 010100101 telling you left or right thing
+	TreeMap<Integer,String> myMap = new TreeMap<>();
 	private String[] makeCodingsFromTree(HuffNode root) {
+		
 		String[] encodings = new String[ALPH_SIZE + 1];
 		codingHelper(root,"", encodings);
+		int index = 0;
+		for (int s : myMap.keySet()) {
+			encodings[index] = myMap.get(s);
+			index+=1;
+		}
 		return encodings;
 	}
 	private void codingHelper(HuffNode root, String path, String [] encodings) {
@@ -111,7 +119,8 @@ public class HuffProcessor {
 			return;
 		}
 		if (root.myLeft == null && root.myRight ==null) {
-			encodings[root.myValue] = path;
+			myMap.put(root.myValue, path);
+			//encodings[root.myValue] = path;
 			return;
 		}
 		codingHelper(root.myLeft, path+"0", encodings);
