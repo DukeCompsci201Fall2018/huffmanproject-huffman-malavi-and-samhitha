@@ -123,6 +123,7 @@ public class HuffProcessor {
 			//encodings[root.myValue] = path;
 			return;
 		}
+		myMap.put(root.myValue, path+"0");
 		codingHelper(root.myLeft, path+"0", encodings);
 		codingHelper(root.myRight, path+"1", encodings);
 
