@@ -87,7 +87,7 @@ public class HuffProcessor {
 			}
 		}	
 		
-		out.close();
+	//	out.close();
 		
 		
 	}
