@@ -68,7 +68,9 @@ public class HuffProcessor {
 		for (String coding : codings) {
 			
 			code = coding;
-			
+			if (out == null) {
+				System.out.print(8/0);
+			}
 			out.writeBits(code.length(), Integer.parseInt(code,2));
 		}
 	
@@ -108,10 +110,10 @@ public class HuffProcessor {
 		String[] encodings = new String[ALPH_SIZE + 1];
 		codingHelper(root,"", encodings);
 		int index = 0;
-		for (int s : myMap.keySet()) {
-			encodings[index] = myMap.get(s);
-			index+=1;
-		}
+	//	for (int s : myMap.keySet()) {
+	//		encodings[index] = myMap.get(s);
+	//		index+=1;
+	//	}
 		return encodings;
 	}
 	private void codingHelper(HuffNode root, String path, String [] encodings) {
@@ -119,11 +121,11 @@ public class HuffProcessor {
 			return;
 		}
 		if (root.myLeft == null && root.myRight ==null) {
-			myMap.put(root.myValue, path);
-			//encodings[root.myValue] = path;
+	//		myMap.put(root.myValue, path);
+			encodings[root.myValue] = path;
 			return;
 		}
-		myMap.put(root.myValue, path+"0");
+	//	myMap.put(root.myValue, path+"0");
 		codingHelper(root.myLeft, path+"0", encodings);
 		codingHelper(root.myRight, path+"1", encodings);
 
