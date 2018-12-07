@@ -54,12 +54,7 @@ public class HuffProcessor {
 		in.reset();
 		writeCompressedBits(codings, in, out);
 		out.close();
-		//while (true){
-		//	int val = in.readBits(BITS_PER_WORD);
-		//	if (val == -1) break;
-		//	out.writeBits(BITS_PER_WORD, val);
-	//	}
-	//	out.close();
+		
 	}
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		//reset?
@@ -87,16 +82,11 @@ public class HuffProcessor {
 			}
 		}	
 		
-	//	out.close();
-		
 		
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
 		if (root!=null) {
-		//	if (root.myValue==-1) {
-		//		out.writeBits(1,PSEUDO_EOF);
-		//	}
 			if (root.myLeft != null && root.myRight != null) { //if internal node
 				out.writeBits(1,0);
 				writeHeader(root.myLeft, out);
@@ -120,10 +110,6 @@ public class HuffProcessor {
 		String[] encodings = new String[ALPH_SIZE + 1];
 		codingHelper(root,"", encodings);
 		int index = 0;
-	//	for (int s : myMap.keySet()) {
-	//		encodings[index] = myMap.get(s);
-	//		index+=1;
-	//	}
 		return encodings;
 	}
 	private void codingHelper(HuffNode root, String path, String [] encodings) {
@@ -131,11 +117,11 @@ public class HuffProcessor {
 			return;
 		}
 		if (root.myLeft == null && root.myRight ==null) {
-	//		myMap.put(root.myValue, path);
+	
 			encodings[root.myValue] = path;
 			return;
 		}
-	//	myMap.put(root.myValue, path+"0");
+
 		codingHelper(root.myLeft, path+"0", encodings);
 		codingHelper(root.myRight, path+"1", encodings);
 
@@ -148,9 +134,6 @@ public class HuffProcessor {
 			if (counts[i]>0) {
 				pq.add(new HuffNode (i, counts[i], null, null));
 			}
-		//	if (!pq.contains(PSEUDO_EOF)) {
-		//		pq.add(new HuffNode(0,PSEUDO_EOF,null,null));
-		//	}
 			
 		}
 		
@@ -197,12 +180,6 @@ public class HuffProcessor {
 		HuffNode root = readTreeHeader(in);
 		readCompressedbits(root,in,out);
 		out.close();
-		//while (true){
-			//int val = in.readBits(BITS_PER_WORD);
-		//	if (val == -1) break;
-		//	out.writeBits(BITS_PER_WORD, val);
-		//}
-		//out.close();
 	}
 	private HuffNode readTreeHeader(BitInputStream in) {
 		while(true) {
@@ -243,7 +220,6 @@ public class HuffProcessor {
 						break;
 					else {
 						out.writeBits(BITS_PER_WORD,current.myValue);
-					//	current.myValue = BITS_PER_WORD;
 						current = root; //start back after leaf
 					}
 				}
